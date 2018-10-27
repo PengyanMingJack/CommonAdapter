@@ -10,5 +10,5 @@
 	}
 
 dependencies {
-	        implementation 'com.github.PengyanMingJack:CommonAdapter:Tag'
+	       implementation 'com.github.PengyanMingJack:CommonAdapter:1.2'
 	}
