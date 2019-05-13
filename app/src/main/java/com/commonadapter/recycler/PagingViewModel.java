@@ -154,6 +154,7 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
         adapter.notifyItemInserted(mList.size() - 1);
     }
 
+
     /**
      * 分页数据加载完成
      */
