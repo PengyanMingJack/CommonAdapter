@@ -41,6 +41,12 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
     protected int pagingPreCount = 0;           // 分页数据预加载 item 数量
     private int mFirstVisibleItem, mLastVisibleItem;
 
+    public interface StateType {
+        int TYPE_INIT = 0;
+        int TYPE_REFRESH = 1;
+        int TYPE_MORE = 2;
+    }
+
     protected List<T> mList = new ArrayList<>(); // 有无更多
     public A adapter; // 有无更多
 
@@ -68,7 +74,7 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
         initFooterBinding();
         notifyChange();
         if (autoRequest) {
-            getData(false);
+            getData(StateType.TYPE_INIT,false);
         }
     }
 
@@ -92,14 +98,14 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
     /**
      * 通过这个方法加载分页数据
      */
-    protected abstract void getData(boolean isMore);
+    protected abstract void getData(int state, boolean isMore);
 
     /**
      * SwipeRefreshLayout.OnRefreshListener 触发事件
      */
     @Override
     public void onRefresh() {
-        getData(false);
+        getData(StateType.TYPE_REFRESH, false);
     }
 
     /**
@@ -254,7 +260,7 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
     public void performPagingLoad() {
         if (pagingHaveMore && !pagingLoading) {
             pagingLoading = true;
-            getData(true);
+            getData(StateType.TYPE_MORE, true);
         }
     }
 

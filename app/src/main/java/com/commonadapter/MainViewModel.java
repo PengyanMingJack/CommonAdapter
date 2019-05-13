@@ -1,7 +1,8 @@
 package com.commonadapter;
 
 import android.content.Context;
-import android.databinding.ViewDataBinding;
+import android.os.Handler;
+import android.util.Log;
 
 import com.commonadapter.recycler.PagingViewModel;
 
@@ -26,25 +27,33 @@ public class MainViewModel extends PagingViewModel<String, CommonAdapter> {
     }
 
     @Override
-    protected void getData(boolean isMore) {
+    protected void getData(int state, final boolean isMore) {
+        Log.e("state", state + "");
         doOnSubscribe(isMore);
-            list = new ArrayList<>();
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        list.add("测试1");
-        accept(isMore, list);
-        doOnComplete(isMore);
+        //模拟网络请求
+        list = new ArrayList<>();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                list.add("测试1");
+                accept(isMore, list);
+                doOnComplete(true);
+            }
+        }, 600);
 
     }
+
 }
