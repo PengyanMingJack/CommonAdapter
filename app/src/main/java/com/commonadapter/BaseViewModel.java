@@ -25,6 +25,7 @@ public class BaseViewModel extends BaseObservable implements IBaseViewModel {
     public BaseViewModel() {
     }
 
+
     public BaseViewModel(Context context) {
         this.context = context;
         initDialog();
