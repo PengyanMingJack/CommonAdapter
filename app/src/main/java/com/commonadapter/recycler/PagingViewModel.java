@@ -42,10 +42,11 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
     private int mFirstVisibleItem, mLastVisibleItem;
 
     public interface StateType {
-        int TYPE_INIT = 0;
-        int TYPE_REFRESH = 1;
-        int TYPE_MORE = 2;
+        int TYPE_INIT = 1;
+        int TYPE_REFRESH = 2;
+        int TYPE_MORE = 3;
     }
+
 
     protected List<T> mList = new ArrayList<>(); // 有无更多
     public A adapter; // 有无更多
@@ -74,7 +75,7 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
         initFooterBinding();
         notifyChange();
         if (autoRequest) {
-            getData(StateType.TYPE_INIT,false);
+            getData(StateType.TYPE_INIT, false);
         }
     }
 
