@@ -34,6 +34,9 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
 
     protected FooterViewModel mFooterViewModel;
 
+
+
+
     protected boolean pagingHaveMore = false;   // 有无更多
     protected boolean pagingLoading = false;    // 分页数据加载中
     protected int pagingLimit = 20;             // 分页数据大小
