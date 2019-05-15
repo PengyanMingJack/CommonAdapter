@@ -10,5 +10,5 @@
 	}
 
 dependencies {
-	       implementation 'com.github.PengyanMingJack:CommonAdapter:1.3'
+	       implementation 'com.github.PengyanMingJack:CommonAdapter:1.5'
 	}
