@@ -35,8 +35,6 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
     protected FooterViewModel mFooterViewModel;
 
 
-
-
     protected boolean pagingHaveMore = false;   // 有无更多
     protected boolean pagingLoading = false;    // 分页数据加载中
     protected int pagingLimit = 20;             // 分页数据大小
@@ -158,6 +156,26 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
         adapter.notifyItemInserted(mList.size() - 1);
     }
 
+    /**
+     * 屏蔽某条
+     *
+     * @param position
+     */
+    protected void removenotifyDataSetChanged(int position) {
+        adapter.mList.remove(position);
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 屏蔽某条
+     *
+     * @param position
+     */
+    protected void notifyItemRemoved(int position) {
+        mList.remove(position);
+        notifyItemRemoved(position);
+        adapter.notifyItemRangeChanged(position, mList.size() - position);
+    }
 
     /**
      * 分页数据加载完成
