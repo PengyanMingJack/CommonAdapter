@@ -161,7 +161,7 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
      *
      * @param position
      */
-    protected void removeDataSetChanged(int position) {
+    public void removeDataSetChanged(int position) {
         adapter.mList.remove(position);
         adapter.notifyDataSetChanged();
         if (mList.size() > 0) {
@@ -178,7 +178,7 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
      *
      * @param position
      */
-    protected void notifyItemRemoved(int position) {
+    public void notifyItemRemoved(int position) {
         mList.remove(position);
         notifyItemRemoved(position);
         adapter.notifyItemRangeChanged(position, mList.size() - position);
