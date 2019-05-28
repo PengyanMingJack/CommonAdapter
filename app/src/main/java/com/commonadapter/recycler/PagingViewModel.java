@@ -37,7 +37,7 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
 
     protected boolean pagingHaveMore = false;   // 有无更多
     protected boolean pagingLoading = false;    // 分页数据加载中
-    protected int pagingLimit = 20;             // 分页数据大小
+    protected int pagingLimit = 10;             // 分页数据大小
     protected int pagingOffset = 1;             // 分页页码
     protected int pagingPreCount = 0;           // 分页数据预加载 item 数量
     private int mFirstVisibleItem, mLastVisibleItem;
@@ -161,9 +161,16 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
      *
      * @param position
      */
-    protected void removenotifyDataSetChanged(int position) {
+    protected void removeDataSetChanged(int position) {
         adapter.mList.remove(position);
         adapter.notifyDataSetChanged();
+        if (mList.size() > 0) {
+            empty.set(false);
+        } else {
+            empty.set(true);
+            notifyMsg(FooterViewModel.STATE_GONE, "");
+
+        }
     }
 
     /**
@@ -175,6 +182,13 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
         mList.remove(position);
         notifyItemRemoved(position);
         adapter.notifyItemRangeChanged(position, mList.size() - position);
+        if (mList.size() > 0) {
+            empty.set(false);
+        } else {
+            empty.set(true);
+            notifyMsg(FooterViewModel.STATE_GONE, "");
+
+        }
     }
 
     /**
@@ -182,7 +196,7 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
      */
     protected void doOnComplete(boolean isMore) {
         refreshComplete();
-        mFooterViewModel.notifyStateChanged(isMore ? FooterViewModel.STATE_IDLE : (empty.get() == true ? FooterViewModel.STATE_GONE : FooterViewModel.STATE_PERIOD));
+        mFooterViewModel.notifyStateChanged(isMore ? FooterViewModel.STATE_GONE : (empty.get() == true ? FooterViewModel.STATE_GONE : FooterViewModel.STATE_PERIOD));
         pagingHaveMore = isMore;
         pagingLoading = false;
     }
