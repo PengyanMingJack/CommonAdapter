@@ -144,6 +144,45 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
     }
 
     /**
+     * 分页数据接收展示 - 单次单页
+     */
+    protected void accept(int state, List<T> newList) {
+        if (state == StateType.TYPE_INIT) {
+            mList.clear();
+            if (newList != null) {
+                mList.addAll(newList);
+            }
+        } else if (state == StateType.TYPE_REFRESH) {
+            if (newList != null) {
+                if (newList.size() > 0) {
+                    mList.clear();
+                    mList.addAll(newList);
+                }
+            }
+        } else {
+            if (newList != null) {
+                mList.addAll(newList);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 分页数据加载完成
+     */
+    protected void doOnComplete(int state, boolean isMore) {
+        refreshComplete();
+        pagingHaveMore = true;
+        pagingLoading = false;
+        if (adapter.mList != null && adapter.mList.size() > 0) {
+            mFooterViewModel.notifyStateChanged(isMore ? FooterViewModel.STATE_GONE : (state == StateType.TYPE_INIT || state == StateType.TYPE_REFRESH) ? FooterViewModel.STATE_GONE : FooterViewModel.STATE_PERIOD);
+        } else {
+            empty.set(true);
+            mFooterViewModel.notifyStateChanged(FooterViewModel.STATE_GONE);
+        }
+    }
+
+    /**
      * 分页数据接收展示 - 单次单条
      */
     protected void accept(boolean isMore, T t) {
@@ -157,7 +196,7 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
     }
 
     /**
-     * 屏蔽某条
+     * 删除某条
      *
      * @param position
      */
@@ -174,7 +213,7 @@ public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
     }
 
     /**
-     * 屏蔽某条
+     * 删除某条
      *
      * @param position
      */
